@@ -1,0 +1,8 @@
+{
+  "name": "FinLearn AI - Tự Học Phân Tích Báo Cáo Tài Chính",
+  "description": "Ứng dụng học phân tích báo cáo tài chính thực chiến với sự hỗ trợ của AI, tập trung vào các công ty S&P500 và VN30.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
