@@ -21,15 +21,18 @@ import {
   Loader2,
   Sparkles,
   Settings,
-  ExternalLink
+  ExternalLink,
+  ListChecks
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { cn } from './lib/utils';
 import { MODULES, Module } from './data/modules';
-import { chatWithAI, analyzeFinancialImage, getRealTimeCompanyData, getCompanyESGData } from './services/gemini';
+import { chatWithAI, getRealTimeCompanyData, getCompanyESGData } from './services/gemini';
+import QuizSection from './components/QuizSection';
+import ImageAnalyzer from './components/ImageAnalyzer';
 
-type TabType = 'theory' | 'deepDive' | 'exercise' | 'project';
+type TabType = 'theory' | 'deepDive' | 'exercise' | 'quiz' | 'project';
 type PersonaType = 'General' | 'Value Investing' | 'Growth Stocks' | 'Technical Analysis' | 'Dividend Investing';
 
 export default function App() {
@@ -116,6 +119,7 @@ export default function App() {
     { id: 'theory', label: 'Lý thuyết', icon: BookOpen },
     { id: 'deepDive', label: 'Deep Dive', icon: Zap },
     { id: 'exercise', label: 'Bài tập', icon: PenTool },
+    { id: 'quiz', label: 'Trắc nghiệm', icon: ListChecks },
     { id: 'project', label: 'Project', icon: Rocket },
   ];
 
@@ -212,6 +216,9 @@ export default function App() {
                 </span>
               </div>
 
+              {activeTab === 'quiz' ? (
+                <QuizSection key={currentModuleIndex} questions={currentModule.sections.quiz} />
+              ) : (
               <div className="prose prose-invert max-w-none">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {currentModule.sections[activeTab] as string}
@@ -234,6 +241,9 @@ export default function App() {
                   </div>
                 )}
               </div>
+              )}
+
+              {activeTab === 'exercise' && <ImageAnalyzer />}
 
               {(activeTab === 'theory' || activeTab === 'deepDive' || activeTab === 'exercise') && (
                 <div className="mt-10 pt-10 border-t border-white/5">
